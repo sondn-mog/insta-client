@@ -1,28 +1,32 @@
 <template>
-  <div class="login-page">
+  <div class="register-page">
     <header>
       <h3>INSTA<span>CLONE</span></h3>
+      <span class="register-text">Register</span>
     </header>
     <main>
-      <input v-model="email" type="email" placeholder="Enter Email" />
+      <input v-model="forename" type="email" placeholder="Forename" />
+      <input v-model="surname" type="email" placeholder="Surname" />
+      <input v-model="email" type="email" placeholder="Email" />
       <input v-model="password" type="password" placeholder="Password" />
-      <button type="submit" @click="login">Login</button>
+      <button type="submit" @click="register">Register</button>
       <div class="error" v-if="hasError">{{ error }}</div>
     </main>
     <footer>
-      <p>Need an account?&nbsp;&nbsp;</p>
-      <router-link to="/register" class="link">Register</router-link>
+      <p>Already have account?&nbsp;&nbsp;</p>
+      <router-link to="/register" class="link">&nbsp;&nbsp;Login</router-link>
     </footer>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
 export default {
   name: "Login",
   data() {
     return {
+      forename: "",
+      surname: "",
       email: "",
       password: "",
       hasError: false,
@@ -30,11 +34,15 @@ export default {
     };
   },
   methods: {
-    login() {
-      if (this.email == "" || this.password == "")
-        return alert("Please fill all field");
+    register() {
+      if (this.forename == "" || this.surname == "" || this.email == "" || this.password == ""){
+        alert("Please fill all field");
+        return;
+      }
       axios
-        .post("http://localhost:3000/user/login", {
+        .post("http://localhost:3000/user/register", {
+          forename: this.forename,
+          surname: this.surname,
           email: this.email,
           password: this.password
         })
@@ -58,4 +66,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 </style>
